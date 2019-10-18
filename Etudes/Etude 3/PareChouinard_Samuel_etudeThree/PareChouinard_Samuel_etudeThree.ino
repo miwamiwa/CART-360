@@ -48,7 +48,13 @@ int countNotes =0;
 int notes [MAX_NOTES]; 
 int mode =0; // start at off
 
+
+// ------------- Here are some variables which I added. I know we 
+// weren't supposed to but that just made most sense to me 
+
+// this keeps track of the time threshold after which the next note should be played 
 long nextNote =0;
+// these two booleans are for making sure buttons send a signal once upon being pressed
 boolean modeButtonPressed = false;
 boolean noteButtonPressed = false;
 
@@ -100,19 +106,26 @@ void loop()
 void chooseMode(){
   // IMPLEMENT
 
+  // check if the mode button is being pressed 
   int val = digitalRead(BUTTON_MODE_PIN);
-  if(val==HIGH){
-    Serial.println("button mode high");
 
+  // if button currently pressed
+  if(val==HIGH){
+    // print to serial for testing
+   // Serial.println("button mode high");
+
+  // if its being pressed hasn't triggered anything yet, 
+  // change modes and reset note count. 
     if( !modeButtonPressed ){
       mode  = (mode+1)%5;
       countNotes=0;
       nextNote = millis();
   }
-
+  // mark button as pressed
   modeButtonPressed = true;
   }
   else {
+    // if button is no longer pressed, mark it as such 
     modeButtonPressed = false;
   }
 
@@ -131,16 +144,21 @@ void chooseMode(){
 void setRGB()
 {
   //IMPLEMENT
+
+  // assign different color lights to the RGB LED according to mode 
   switch(mode){
-    case 0: lightRGB(0,0,0); break;
-    case 1: lightRGB(0,0,200); break;
-    case 2: lightRGB(200,0,0); break;
-    case 3: lightRGB(0,200,0); break;
-    case 4: lightRGB(200,0,200); break;
-    default: lightRGB(0,0,0); break;
+    case 0: lightRGB(0,0,0); break; // no color 
+    case 1: lightRGB(0,0,200); break; // blue 
+    case 2: lightRGB(200,0,0); break; // red 
+    case 3: lightRGB(0,200,0); break; // green 
+    case 4: lightRGB(200,0,200); break; // purple
+    default: lightRGB(0,0,0); break; // in case no case is triggered
   }
 }
 
+// lightRGB()
+// I wrote a function.. imagine that I copy-pasted this please
+// triggers correct analogWrite() functions according to the color we want to display on the RGB LED
 void lightRGB(int r, int g, int b){
   analogWrite(LED_PIN_R, r);
   analogWrite(LED_PIN_G, g);
@@ -191,6 +209,8 @@ void selectMode()
 void reset()
 {
   // IMPLEMENT
+  
+  // run through each note in the notes list and clear it. 
   for(int i=0; i< MAX_NOTES; i++){
     notes[i]=0;
   }
@@ -207,11 +227,17 @@ void reset()
 void live()
 {
     
-    //IMPLEMENT
+    // get the analog reading from the pin where all the buttons go to 
     int  noteReading = analogRead(A0);
-  Serial.println(noteReading);
-  if(noteReading>15){
-    
+    Serial.println(noteReading);
+
+    // if there is significant voltage
+    if(noteReading>15){
+      // trigger a tone by converting voltage directly to frequency. 
+      // this is a place where I could have written a bunch of if/else statements to 
+      // find which button was pressed ( such as if (a<x) {} else if (x<b) {} etc.) 
+      // and reassign another frequency, like a pentatonic scale or something. 
+      // i spent time this weekend playing with servo's instead though :)
       tone(BUZZER_PIN, noteReading, 150);
 
   }
@@ -231,27 +257,30 @@ void record()
 {
   // IMPLEMENT
 
+  // get reading from the note buttons 
     int  noteReading = analogRead(A0);
-  Serial.println(noteReading);
-  if(noteReading>15){
-    
-    if(!noteButtonPressed){
-      /*
-      switch(noteReading){
-        case 340: notes[countNotes] = 1; break;
-        case 510: notes[countNotes] = 2; break;
-        case 1023: notes[countNotes] = 3; break;
-      }
-      */
+  //Serial.println(noteReading);
 
+  // if there is significant voltage
+  if(noteReading>15){
+
+    // if no button was pressed yet 
+    if(!noteButtonPressed){
+
+      // update appropriate entry in the notes array 
       notes[countNotes] = noteReading;
+
+      // trigger a sound so the user knows something happened
       tone(BUZZER_PIN, noteReading, 150);
+
+      // move on to the next note 
       countNotes  = (countNotes+1)%16;
     }
-    
+    // mark button as pressed
     noteButtonPressed = true;
   }
   else {
+    // if no button is pressed, mark them as such 
     noteButtonPressed = false;
   }
   
@@ -269,14 +298,17 @@ void record()
 void play()
 {
   // IMPLEMENT
-
+    // if threshold for playing the next note has been reached
       if(millis()>=nextNote){
 
+    // if there is a note to be played (this cuts the loop short if there arent enough notes)
       if(notes[countNotes]>0){
+        // play the note
         tone(BUZZER_PIN, notes[countNotes], 150);
+        // set the next threshold 
         nextNote = millis()+duration;
         }
-        
+        // update note count whether or not one was played 
       countNotes  = (countNotes+1)%16;  
       
     }
@@ -294,15 +326,17 @@ void play()
 void loopMode()
 {
   //IMPLEMENT
-
+  // same structure as play(): if note threshold is reached
   if(millis()>=nextNote){
-
+    // if there is a note to play 
       if(notes[countNotes]>0){
+        // play the note 
         tone(BUZZER_PIN, notes[countNotes], 150);
+        // set the next threshold 
         nextNote = millis()+duration;
         }
         
-    //  countNotes  = (countNotes+1)%16; 
+    //  pick a random note to play instead of incrementing them. 
       countNotes = int( random(0, 16) ); 
       
     }
