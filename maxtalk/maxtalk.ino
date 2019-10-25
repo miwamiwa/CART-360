@@ -1,7 +1,7 @@
 #include <Servo.h>
 
 const int buttonPin = 2;
-const int ledPin = 13;
+//const int ledPin = 13;
 int vel = 10;
 
 int buttonState =0;
@@ -29,7 +29,7 @@ Servo myservo3;
 void setup() {
   // put your setup code here, to run once:
   pinMode(buttonPin, INPUT);
-  pinMode(ledPin,OUTPUT);
+//  pinMode(ledPin,OUTPUT);
   myservo.attach(9);
   myservo2.attach(10);
   myservo3.attach(11);
