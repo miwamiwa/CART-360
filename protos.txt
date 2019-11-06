@@ -1,0 +1,56 @@
+
+>>>>>>>>>>>>>> proto 1 october 13: 
+https://youtu.be/bLmnhcubRQk
+
+testing servo as a percussive tool: hammer moving down and back up. There is a button but note how I am pressing the reset button :D uses arduino only. moves rather slowly. Here I taped the servo to a couple of hockey pucks to weigh it down and allow for as much motion as possible. I end up keeping that configuration for a few iterations, up until I change the hammers. 
+
+
+>>>>>>>>>>>>>> proto 2 october 13:
+https://youtu.be/TjgmKtbt8jI
+
+testing messaging between arduino and max msp, using a youtube tutorial. 
+communication works both ways (button press sends numbers to max, and clicks trigger an led on the breadboard), but it is asynchronous. 
+
+
+>>>>>>>>>>>>>> proto 3 october 13:
+https://youtu.be/dGC0VQqBEbs
+
+testing the first two prototypes together. button press sends a trigger to max which returns two target positions for the hammer to reach, one after the other. some shy attempts at achieving a faster hammer motion :D No notable communication issues here, but the test is also very simple
+
+
+>>>>>>>>>>>>>> proto 4 october 13:
+https://youtu.be/TA_vyiMiKDI
+https://youtu.be/JhC7hEdv8z0
+
+multi-servo motion controlled via max msp. this is really just the previous prototype times three. I even tried having three buttons to control the hammers. the goal of this one is to explore how max could be used to create an interesting noise texture out of the three servos. I patched a bit as I was experimenting, and tried tapping different objects as well, with different types of metallic and plastic sounds. 
+
+the max patch i built for this one was meant to make a kind of strumming effect by playing them out of phase. the effect is approximative and drowned out by the noisy hammer motion. Some level of speed is achieved, which is nice because I was looking to create a kind of tremolo effect. 
+As the session continues I shorten the hammer motion and get much more speedy hammer motions, with much less motor noise. Pushing even further in that direction, I start to get quick strumming on all hammers. Very satisfied with how fast the communication on the serial port seems to work. 
+
+First issues with two-way serial communication without handshaking happen here, but I'm not sure what to do about them yet. In retrospect it's clear that messages are just getting mixed up in the serial. I give up the idea of sending button inputs, not knowing what to think about it. Instead, I focus on one-way communication from max to arduino that will orchestrate the tapping. 
+
+
+>>>>>>>>>>>>>> proto 5 october 18:
+https://youtu.be/Hu9g8FXTc2I
+
+there is one short video of prototype 5. it is essentially a rebuilt version of prototype 4 that i made to test out some improvements in my max patch and another possible method of controlling the hammers using the function objects. Didn't really like it in the end. This play on phase is starting to feel a bit lame too. I also added a second type of message from max to arduino which adjusts the hammer height, so that I can configure them freely before starting or during the testing. 
+
+
+>>>>>>>>>>>>>> proto 6 october 27:
+https://youtu.be/sMTK4p5J3GY
+
+changed hammer from one-sided to two-sided. the servo hold it from the middle of the shaft now, and it is taped to a small pile of quarters, all together taped down onto the table. Faster tapping indeed. There is also a new max patch to control the hammers, which uses the multislider object allow for programming different hammer speeds in a loop. There is no more need for the height adjustment message i had just added. I like the new max patch, now it's time to add the ultrasonic sensor.
+
+
+>>>>>>>>>>>>>> proto 7 november 1-2:
+
+tested the ultrasonic sensor on the side, now it's time to add it in. And... it doesn't work. Serial communication is going ham, hammers are twitching slightly rather than joyfully tapping. I do some research and first I find out about handshaking, so I implement that but it doesn't help. I take some time to find out how the pulseIn() function I was using to read the ultrasonic sensor delays the arduino for about half a second every time. I take some more time to find a library that can help me, and try again. There is no documentation for this prototype.
+
+
+>>>>>>>>>>>>>> proto 8 november 3:
+https://youtu.be/5ceoe2wco_I
+
+Did a bunch of work on the max msp patch and the arduino code. The arduino reads the ultrasonic sensor without delays. Max and arduino are now "handshaking", or exchanging messages in a call-response fashion. I might have lost a bit of hammer speed since adding the handshaking but it's worth having two-way communication. 
+With the communication working, the goal of this session is to think more about sound. I plug in a microphone and start experimenting with treating the sound from the hammers. Looking through my files for inspiration I plugged in a patch we made in class in CART 346, which is a combination of delays and filters. With a little tweaking, it transforms the hammer sounds into splash-like sounds. It's accidental but it feels interestingly related to my initial idea of making a piece for a playground jet structure. 
+
+Data from the ultrasonic sensor is also useable as numeric input within max/msp. I spend some time making first experiments with controlling different aspects of the sound treatment using the sensor. It's probably not enough - in the next prototype I want to use sensors to trigger different hammer motions as well. Maybe muliple ultrasonic sensors. Maybe I could try different sensors now that I have a working system to send data back and forth to max.
