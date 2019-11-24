@@ -1,0 +1,12 @@
+motor example
+https://www.oddwires.com/using-a-mosfet-to-control-a-dc-motor/
+
+max to arduino tutorial
+https://www.youtube.com/watch?v=68L-WHh3Ows
+https://www.youtube.com/watch?v=6bT3G4Mep7E
+
+transceiver example 
+https://randomnerdtutorials.com/nrf24l01-2-4ghz-rf-transceiver-module-with-arduino/
+
+max+unity+osc script and example
+https://thomasfredericks.github.io/UnityOSC/
