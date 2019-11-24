@@ -22,7 +22,7 @@ public class maxflow : MonoBehaviour
             float posx = gameObject.transform.position.x;
             float posy = gameObject.transform.position.y;
             OscMessage message = new OscMessage();
-            message.address = "/unitytest";
+            message.address = "/rotation";
             message.values.Add(gameObject.transform.rotation.y);
             osc.Send(message);
 
