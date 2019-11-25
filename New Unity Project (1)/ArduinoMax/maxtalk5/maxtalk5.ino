@@ -195,17 +195,17 @@ void receiveMax(){
         //Serial.println(motorvalue);
   //  servovalues = value - motorvalue*1000;
 
-    if (servovalues<300){
+    if (value<300){
 
-     if(servovalues%2==0) tarPos1 = pos1a;
+     if(value%2==0) tarPos1 = pos1a;
     else tarPos1 = pos1b;
 
-    int val2 = servovalues/10;
+    int val2 = value/10;
 
     if(val2%2==0) tarPos2 = pos2a;
     else tarPos2 = pos2b;
 
-    int val3 = servovalues/100;
+    int val3 = value/100;
 
     if(val3%2==0) tarPos3 = pos3a;
     else tarPos3 = pos3b;
