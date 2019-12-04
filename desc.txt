@@ -1,0 +1,8 @@
+CART 360 thisthenthat final report
+
+OVERVIEW
+
+The initial intention behind this project was to build a piece around an out-of-service kid's play area with water jets, giving it back a feeling of life and playfulness by using arduino to make an interactive installation. My initial focus went towards sound, which I initially wanted to be the main feature of my installation. The idea eventually evolved into a VR experience that attempts to tie together gestural elements related to the water jets, a multi-user play experience and a virtual environment that references the initial place of interest. A user wearing a VR headset can play around with a water jet, attempting to shoot it towards the place where another user stands, who can also direct his jet towards the user wearing the headset. The headset user gets to view the scene through the headset and experience the sound through headphones, while the other user can watch on screen and receives feeback a sense response - wind and sound. The sound aspect created at the beginning of the process remains in the piece, as a secondary feature generative ambiant sound. 
+
+INSIGHT AND FUTURE DEVELOPMENTS
+
