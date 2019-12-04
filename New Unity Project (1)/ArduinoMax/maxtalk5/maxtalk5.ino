@@ -1,15 +1,8 @@
 // motor stuff 
-
-int turns = 0; // how fast the motor runs
-
-int turnAmount = 1; // how many turns the motor makes
-
-unsigned long currentTime;
-
-unsigned long loopTime;
-
-#define coolPin 5
-
+const int leftForward = 5;
+//const int leftBackward = 5;
+long currentTime=0;
+long loopTime=0;
 
 // servo stuff 
 
@@ -64,6 +57,9 @@ int pos3b = 115;
 bool comStarted = false;
 
 void setup() {
+
+  pinMode(leftForward , OUTPUT);
+//  pinMode(leftBackward , OUTPUT);
   
   // servo
  // myservo.attach(3);
@@ -115,34 +111,10 @@ void motorStuff(){
 
    if(currentTime >= (loopTime + 20)){
 
-       // set the speed of pin 9:
 
-       analogWrite(coolPin, turns);
-
- 
-
-       // change the turnings for next time through the loop:
-
-      // turns = turns + turnAmount;
-
-    turns = motorvalue * 27;
-
-    
-
-       // speed up or slow down the motor
-
-    //   if (turns == 0 || turns == 255) {
-
-      //     turnAmount = -turnAmount ;
-
-      // }
-
-      // if (turns == 0) {
-
-         // delay(5000);
-
-     // }
-    //  Serial.println(turns);
+       analogWrite(leftForward , motorvalue*25);
+     //  digitalWrite(leftBackward , LOW);
+   
        loopTime = currentTime; // Updates loopTime
 
    }
